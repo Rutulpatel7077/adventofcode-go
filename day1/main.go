@@ -23,11 +23,29 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	helpers "../helpers"
 )
 
 func main() {
 	puzzleInput := helpers.GetFile("./input.txt")
-	fmt.Print(puzzleInput)
+	var totalFuel int
+
+	for _, item := range puzzleInput {
+		input, err := strconv.ParseFloat(item, 64)
+		if err != nil {
+			panic(err)
+		}
+
+		calcultedFuelPerInput := getRequiredFuelByMass(input)
+		totalFuel = calcultedFuelPerInput + totalFuel
+	}
+
+	fmt.Println(totalFuel)
+}
+
+func getRequiredFuelByMass(input float64) int {
+	requiredFuel := int((input / 3) - 2)
+	return requiredFuel
 }
